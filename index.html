@@ -1,0 +1,307 @@
+<!doctype html>
+<style>
+  @font-face {
+    font-family: "EB Garamond";
+    src: url("fonts/eb-garamond.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Alice";
+    src: url("fonts/alice.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Kedebideri";
+    font-weight: 400;
+    src: url("fonts/kedebideri-400.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Kedebideri";
+    font-weight: 500;
+    src: url("fonts/kedebideri-500.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Kedebideri";
+    font-weight: 600;
+    src: url("fonts/kedebideri-600.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Kedebideri";
+    font-weight: 700;
+    src: url("fonts/kedebideri-700.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Kedebideri";
+    font-weight: 800;
+    src: url("fonts/kedebideri-800.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Kedebideri";
+    font-weight: 900;
+    src: url("fonts/kedebideri-900.woff2") format("woff2");
+  }
+  html {
+    background: black;
+    color: white;
+  }
+  header {
+    margin-top: 50vh;
+    line-height: 0;
+    position: relative;
+    font-family: "EB Garamond", serif;
+  }
+
+  header h1 {
+    position: relative;
+    font-family: "Alice", serif;
+    font-style: italic;
+    font-weight: 550;
+    font-size: 10vw;
+    text-align: center;
+  }
+
+  @property --shad-y-nudge {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0px;
+  }
+
+  header h1 {
+    --shad-y-nudge: -0.4vw;
+    --shad-a-nudge: -0.03;
+    --shad-ft-nudge: 2vw;
+    animation: shad-nudge linear both;
+    animation-timeline: view(-100%);
+  }
+
+  @keyframes shad-nudge {
+    from {
+      --shad-y-nudge: -1.2vw;
+    }
+    50% {
+      --shad-y-nudge: -0.4vw;
+    }
+    to {
+      --shad-y-nudge: 4vw;
+    }
+  }
+
+  header h1 .shad {
+    position: absolute;
+    inset: 0;
+    height: 10vh;
+    color: transparent;
+    line-height: 5vh;
+    transform: translate(
+      0,
+      calc(-1vw + var(--shad-index) * var(--shad-y-nudge))
+    );
+    -webkit-text-stroke: 2px
+      rgba(255, 200, 255, calc(0.5 + var(--shad-index) * var(--shad-a-nudge)));
+    font-size: calc(10vw + var(--shad-index) * var(--shad-ft-nudge));
+  }
+
+  h2 {
+    font-family: "EB Garamond", serif;
+    font-weight: 600;
+    font-size: 3vw;
+    text-align: center;
+    /*text-decoration: underline;*/
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: 2px;
+  }
+
+  h2 {
+    padding-top: 15vh;
+    text-align: center;
+  }
+
+  h2 em {
+    font-size: 3vw;
+  }
+
+  header p {
+    text-align: center;
+    padding-top: 40px;
+  }
+
+  .shad.s0 {
+    color: white;
+    --shad-index: 0;
+  }
+
+  .shad.s1 {
+    --shad-index: 1;
+  }
+
+  .shad.s2 {
+    --shad-index: 2;
+  }
+
+  .shad.s3 {
+    --shad-index: 3;
+  }
+
+  .shad.s4 {
+    --shad-index: 4;
+  }
+
+  .shad.s5 {
+    --shad-index: 5;
+  }
+
+  .shad.s6 {
+    --shad-index: 6;
+  }
+
+  .shad.s7 {
+    --shad-index: 7;
+  }
+
+  .shad.s8 {
+    --shad-index: 8;
+  }
+
+  .shad.s9 {
+    --shad-index: 9;
+  }
+
+  .shad.s10 {
+    --shad-index: 10;
+  }
+
+  .shad.s11 {
+    --shad-index: 11;
+  }
+
+  .shad.s12 {
+    --shad-index: 12;
+  }
+
+  .shad.s13 {
+    --shad-index: 13;
+  }
+
+  .shad.s14 {
+    --shad-index: 14;
+  }
+
+  .shad.s15 {
+    --shad-index: 15;
+  }
+
+  .shad.s16 {
+    --shad-index: 16;
+  }
+
+  #hosts {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: top;
+    gap: 10px;
+  }
+
+  .author-name.right {
+    right: 0;
+  }
+
+  .headshot {
+    max-width: 25vw;
+    min-width: 200px;
+  }
+
+  .host {
+    position: relative;
+    max-width: 25vw;
+    min-width: 250px;
+    min-height: 300px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .host.tilde {
+    background-image: url(images/tilde-headshot.jpg);
+  }
+
+  .host.asha {
+    background-image: url(images/asha-headshot.jpg);
+  }
+
+  .author-name {
+    font-weight: bold;
+  }
+
+  .bio {
+    margin: 100% 10px 10px 10px;
+    background: black;
+    border: thin solid fuchsia;
+    font-family: "Alice", serif;
+    padding: 9px;
+  }
+
+  section {
+    display: table;
+    font-family: "Kedebideri";
+    width: min(calc(100vw - 18px), 75vw);
+    margin: auto;
+  }
+</style>
+
+<header>
+  <h1>
+    <span class="shad s16">xxyfe</span>
+    <span class="shad s15">xxyfe</span>
+    <span class="shad s14">xxyfe</span>
+    <span class="shad s13">xxyfe</span>
+    <span class="shad s12">xxyfe</span>
+    <span class="shad s11">xxyfe</span>
+    <span class="shad s10">xxyfe</span>
+    <span class="shad s9">xxyfe</span>
+    <span class="shad s8">xxyfe</span>
+    <span class="shad s7">xxyfe</span>
+    <span class="shad s6">xxyfe</span>
+    <span class="shad s5">xxyfe</span>
+    <span class="shad s4">xxyfe</span>
+    <span class="shad s3">xxyfe</span>
+    <span class="shad s2">xxyfe</span>
+    <span class="shad s1">xxyfe</span>
+    <span class="shad s0">xxyfe</span>
+  </h1>
+</header>
+<section>
+  <h2>(revolutionary bodies)</h2>
+  <p>
+    a(n upcoming) podcast exploring liberatory futures for queer bodies and
+    selves.
+  </p>
+  <p>queer biohacking</p>
+  <p>how to let go of a dying friend</p>
+  <p>how do tattoos change your sense of self?</p>
+  <p>reclaiming indigenous genders</p>
+  <p>(how) can psychedelics actually help the revolution?</p>
+</section>
+
+<section>
+  <h2>hosts</h2>
+  <div id="hosts">
+    <div class="host tilde">
+      <div class="bio">
+        <span class="author-name">tilde thurium</span> knows more about
+        artisanal peptides and deadlifts than you ever will unless you're also a
+        total weirdo. when they are not culturing vegan cheese or themself, they
+        can be found petting their bunny, which is not a euphemism (although
+        that too).
+      </div>
+    </div>
+    <div class="host asha">
+      <div class="bio">
+        <span class="author-name">asha krishna</span> is very skeptical of this
+        whole <em>industrialization</em> thing, yet is also friends with many
+        robots. she contains multituides. the only indian child to wish her
+        parents had pushed her into medicine, she now enjoys finding beautiful
+        ways to tell the stories embodied by the world and fighting with her
+        comrades (as in, <em>alongside</em>) (although that too).
+      </div>
+    </div>
+  </div>
+  both live in the unceded territory of the Chochenyo Ohlone people
+</section>
