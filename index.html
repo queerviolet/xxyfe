@@ -65,23 +65,34 @@
     initial-value: 0px;
   }
 
+  @property --twist {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0deg;
+  }
+
   header h1 {
     --shad-y-nudge: -0.4vw;
     --shad-a-nudge: -0.03;
     --shad-ft-nudge: 2vw;
-    animation: shad-nudge linear both;
+    --twist: 10deg;
+    perspective: 60vw;
+    animation: shad-nudge ease-out both;
     animation-timeline: view(-100%);
   }
 
   @keyframes shad-nudge {
     from {
       --shad-y-nudge: -1.2vw;
+      --twist: -10deg;
     }
     50% {
       --shad-y-nudge: -0.4vw;
+      --twist: 0deg;
     }
     to {
       --shad-y-nudge: 4vw;
+      --twist: 20deg;
     }
   }
 
@@ -92,9 +103,10 @@
     color: transparent;
     line-height: 5vh;
     transform: translate(
-      0,
-      calc(-1vw + var(--shad-index) * var(--shad-y-nudge))
-    );
+        0,
+        calc(-1vw + var(--shad-index) * var(--shad-y-nudge))
+      )
+      rotateY(calc(var(--twist) * var(--shad-index)));
     -webkit-text-stroke: 2px
       rgba(255, 200, 255, calc(0.5 + var(--shad-index) * var(--shad-a-nudge)));
     font-size: calc(10vw + var(--shad-index) * var(--shad-ft-nudge));
@@ -263,30 +275,76 @@
   }
 </style>
 
-<svg width=0 height=0 style="position:absolute">
+<svg width="0" height="0" style="position: absolute">
   <!-- vignette + edge-increasing chromatic aberration, applied to .host::before -->
   <filter id="lens" color-interpolation-filters="sRGB">
     <!-- position map: R encodes x, G encodes y, so displacement grows toward the edges -->
     <feImage
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><defs><linearGradient id='h'><stop offset='0' stop-color='%23000'/><stop offset='1' stop-color='%23f00'/></linearGradient><linearGradient id='v' x2='0' y2='1'><stop offset='0' stop-color='%23000'/><stop offset='1' stop-color='%230f0'/></linearGradient></defs><rect width='100' height='100' fill='url(%23h)'/><rect width='100' height='100' fill='url(%23v)' style='mix-blend-mode:screen'/></svg>"
-      x=0 y=0 width="100%" height="100%" preserveAspectRatio=none result=map />
+      x="0"
+      y="0"
+      width="100%"
+      height="100%"
+      preserveAspectRatio="none"
+      result="map"
+    />
     <!-- ease the map so displacement stays ~0 in the center and ramps up only near the edges -->
-    <feComponentTransfer in=map result=eased>
-      <feFuncR type=table tableValues="0 0.46 0.5 0.54 1" />
-      <feFuncG type=table tableValues="0 0.46 0.5 0.54 1" />
+    <feComponentTransfer in="map" result="eased">
+      <feFuncR type="table" tableValues="0 0.46 0.5 0.54 1" />
+      <feFuncG type="table" tableValues="0 0.46 0.5 0.54 1" />
     </feComponentTransfer>
-    <feDisplacementMap in=SourceGraphic in2=eased scale=18 xChannelSelector=R yChannelSelector=G result=red />
-    <feDisplacementMap in=SourceGraphic in2=eased scale=-18 xChannelSelector=R yChannelSelector=G result=blue />
-    <feColorMatrix in=red values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result=redOnly />
-    <feColorMatrix in=SourceGraphic values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result=greenOnly />
-    <feColorMatrix in=blue values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result=blueOnly />
-    <feBlend in=redOnly in2=greenOnly mode=screen result=rg />
-    <feBlend in=rg in2=blueOnly mode=screen result=split />
+    <feDisplacementMap
+      in="SourceGraphic"
+      in2="eased"
+      scale="18"
+      xChannelSelector="R"
+      yChannelSelector="G"
+      result="red"
+    />
+    <feDisplacementMap
+      in="SourceGraphic"
+      in2="eased"
+      scale="-18"
+      xChannelSelector="R"
+      yChannelSelector="G"
+      result="blue"
+    />
+    <feColorMatrix
+      in="red"
+      values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"
+      result="redOnly"
+    />
+    <feColorMatrix
+      in="SourceGraphic"
+      values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"
+      result="greenOnly"
+    />
+    <feColorMatrix
+      in="blue"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"
+      result="blueOnly"
+    />
+    <feBlend in="redOnly" in2="greenOnly" mode="screen" result="rg" />
+    <feBlend in="rg" in2="blueOnly" mode="screen" result="split" />
     <!-- vignette: multiply by a radial gradient that darkens the edges -->
     <feImage
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><defs><filter id='b' x='-0.25' y='-0.25' width='1.5' height='1.5'><feGaussianBlur stdDeviation='9'/></filter></defs><rect width='100' height='100' fill='%23808080'/><rect x='6' y='6' width='88' height='88' rx='26' fill='%23fff' filter='url(%23b)'/></svg>"
-      x=0 y=0 width="100%" height="100%" preserveAspectRatio=none result=vig />
-    <feComposite in=split in2=vig operator=arithmetic k1=1 k2=0 k3=0 k4=0 />
+      x="0"
+      y="0"
+      width="100%"
+      height="100%"
+      preserveAspectRatio="none"
+      result="vig"
+    />
+    <feComposite
+      in="split"
+      in2="vig"
+      operator="arithmetic"
+      k1="1"
+      k2="0"
+      k3="0"
+      k4="0"
+    />
   </filter>
 </svg>
 
