@@ -84,7 +84,7 @@
     --twist: 10deg;
     perspective: 60vw;
     animation: shad-nudge ease-out both;
-    animation-timeline: view(-100%);
+    animation-timeline: view(-400%);
   }
 
   @keyframes shad-nudge {
@@ -99,14 +99,14 @@
       --hue-nudge: 0deg;
     }
     to {
-      --shad-y-nudge: 4vw;
-      --twist: 20deg;
+      --shad-y-nudge: 16vw;
+      --twist: 80deg;
       --hue-nudge: 80deg;
     }
   }
 
   header h1 .shad {
-    position: fixed;
+    position: absolute;
     inset: 0;
     height: 10vh;
     color: transparent;
@@ -124,7 +124,7 @@
     -webkit-text-stroke: 2px
       rgba(255, 200, 255, calc(0.5 + var(--shad-index) * var(--shad-a-nudge)));
     font-size: calc(10vw + var(--shad-index) * var(--shad-ft-nudge));
-    z-index: 1000;
+    z-index: calc(1000 + var(--shad-index));
 
     /* translucent, slowly drifting bisexual-flag gradient (pink -> purple -> blue) */
     color: hsla(255, 100%, 80%, var(--alpha));
@@ -292,7 +292,7 @@
     animation: host-appear linear both;
     animation-timeline: view();
     animation-range: entry;
-    mix-blend-mode: multiply;
+    mix-blend-mode: screen;
   }
 
   .host::before {
@@ -305,28 +305,29 @@
     z-index: -1;
     background: var(--headshot) center / cover no-repeat;
     background-size: cover / cover;
-    filter: url(#lens);
+    /*filter: url(#lens);*/
     clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-
-    animation: host-twist linear both;
+    /*mix-blend-mode: multiply;*/
+    /*animation: host-twist linear both;
     animation-timeline: view();
-    animation-range: entry;
+    animation-range: entry;*/
   }
 
   .host.tilde {
-    --headshot: url(images/tilde-headshot.jpg);
+    --headshot: url(images/tilde-headshot-wire.png);
     --ratio: 1 / 1.2;
     --twist-from: -50deg;
   }
 
   .host.tilde::before {
     /* size by height so the image overflows horizontally, giving room to pan */
-    background-size: auto 125%;
-    background-position-x: 20%;
+    /*background-size: contain;*/
+    /*background-position-y: 50%;*/
+    background-size: contain;
   }
 
   .host.asha {
-    --headshot: url(images/asha-headshot.jpg);
+    --headshot: url(images/asha-headshot-wire.png);
     --ratio: 1 / 1.2;
     --twist-from: 50deg;
   }
@@ -376,7 +377,9 @@
   }
 
   #signup {
-    margin-top: 5em;
+    display: table;
+    margin: auto;
+    margin-top: 2.5em;
   }
 
   button:hover,
@@ -564,23 +567,24 @@
     </div>
   </div>
   <p>both live in the unceded territory of the Chochenyo Ohlone people</p>
-
+</section>
+<section>
   <button id="signup" class="signup">Notify me</button>
   <script>
     signup.onclick = () => {
       signup.insertAdjacentHTML(
         "beforebegin",
         `<iframe
-        class=signup-frame
-        src="https://docs.google.com/forms/d/e/1FAIpQLSe7bmVaVeSPbqJMwx2OPUWASdbuspVsjI9A4Q9HsPvgOvwSkA/viewform?embedded=true"
-        width="640"
-        height="374"
-        frameborder="0"
-        marginheight="0"
-        marginwidth="0"
-        scrolling="no"
-        >Loading…</iframe
-        >`,
+    class=signup-frame
+    src="https://docs.google.com/forms/d/e/1FAIpQLSe7bmVaVeSPbqJMwx2OPUWASdbuspVsjI9A4Q9HsPvgOvwSkA/viewform?embedded=true"
+    width="640"
+    height="374"
+    frameborder="0"
+    marginheight="0"
+    marginwidth="0"
+    scrolling="no"
+    >Loading…</iframe
+    >`,
       );
       signup.remove();
     };
