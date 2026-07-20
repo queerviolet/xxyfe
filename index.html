@@ -78,7 +78,7 @@
   }
 
   header h1 {
-    --shad-y-nudge: -0.4vw;
+    --shad-y-nudge: -0.4vh;
     --shad-a-nudge: -0.03;
     --shad-ft-nudge: 2vw;
     --twist: 10deg;
@@ -89,17 +89,17 @@
 
   @keyframes shad-nudge {
     from {
-      --shad-y-nudge: -1.2vw;
+      --shad-y-nudge: -1.2vh;
       --twist: -10deg;
       --hue-nudge: 0deg;
     }
     50% {
-      --shad-y-nudge: -0.3vw;
+      --shad-y-nudge: -0.3vh;
       --twist: 0deg;
       --hue-nudge: 0deg;
     }
     to {
-      --shad-y-nudge: 16vw;
+      --shad-y-nudge: 16vh;
       --twist: 80deg;
       --hue-nudge: 80deg;
     }
@@ -116,7 +116,7 @@
     user-select: none;
     transform: translate(
         0,
-        calc(-1vw + var(--shad-index) * var(--shad-y-nudge))
+        calc(-2.6vh + var(--shad-index) * var(--shad-y-nudge))
       )
       rotateY(calc(var(--twist) * var(--shad-index)));
 
@@ -124,7 +124,7 @@
     -webkit-text-stroke: 2px
       rgba(255, 200, 255, calc(0.5 + var(--shad-index) * var(--shad-a-nudge)));
     font-size: calc(10vw + var(--shad-index) * var(--shad-ft-nudge));
-    z-index: calc(1000 + var(--shad-index));
+    /*z-index: calc(1000 + var(--shad-index));*/
 
     /* translucent, slowly drifting bisexual-flag gradient (pink -> purple -> blue) */
     color: hsla(255, 100%, 80%, var(--alpha));
